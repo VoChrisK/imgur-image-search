@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'image-page',
@@ -17,8 +17,8 @@ import { Router } from '@angular/router';
       />
     </div>
   `,
-  standalone: true,
   styleUrl: './image-page.component.scss',
+  standalone: true,
   imports: [MatIconModule]
 })
 export class ImagePageComponent implements OnInit {

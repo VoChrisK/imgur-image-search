@@ -1,0 +1,7 @@
+.tag {
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
