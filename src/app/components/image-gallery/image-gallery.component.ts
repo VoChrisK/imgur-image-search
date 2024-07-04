@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { FilteredImages, Image } from '../../models/image';
 
 @Component({
   selector: 'image-gallery',
@@ -9,9 +10,9 @@ import { RouterModule } from '@angular/router';
       <div class="row mb-2">
         <div class="col-sm-2" *ngFor="let image of images">
           <img 
-            [src]="image.images?.[0]?.link || image.link"
+            [src]="image.images[0].link || image.link"
             [alt]="image.title"
-            [routerLink]="['/image', { image: image.images?.[0]?.link }]"
+            [routerLink]="['/image', { image: image.images[0].link }]"
             class="img-fluid"
             style="cursor: pointer;"
           />
@@ -24,5 +25,5 @@ import { RouterModule } from '@angular/router';
   imports: [CommonModule, RouterModule]
 })
 export class ImageGalleryComponent {
-  @Input() images: any;
+  @Input() images: FilteredImages;
 }

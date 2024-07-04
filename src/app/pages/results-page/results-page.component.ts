@@ -3,6 +3,8 @@ import { SearchService } from '../../services/search.service';
 import { SearchInputComponent } from '../../components/search-input/search-input.component';
 import { ImageGalleryComponent } from '../../components/image-gallery/image-gallery.component';
 import { TagsListComponent } from '../../components/tags-list/tags-list.component';
+import { FilteredImages, Image } from '../../models/image';
+import { Tag, TagFrequency } from '../../models/tag';
 
 @Component({
   selector: 'search-page',
@@ -18,8 +20,8 @@ import { TagsListComponent } from '../../components/tags-list/tags-list.componen
   imports: [SearchInputComponent, ImageGalleryComponent, TagsListComponent]
 })
 export class ResultsPageComponent implements OnInit {
-  images: any;
-  tags: any;
+  images: FilteredImages;
+  tags: Array<TagFrequency>;
 
   constructor(
     private searchService: SearchService
@@ -27,18 +29,20 @@ export class ResultsPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.images = this.searchService.retrieveFilteredImages() || this.searchService.retrieveImages();
+    this.searchService.getTagsList();
     this.tags = this.searchService.retrieveTagsFrequency();
   }
 
-  onReceived(value: string) {
+  onReceived(value: string): void {
     this.searchService.getImages(value)
       .then(() => {
         this.images = this.searchService.retrieveImages();
+        this.searchService.getTagsList();
         this.tags = this.searchService.retrieveTagsFrequency();
       });
   }
 
-  filterImages(tag: string) {
+  filterImages(tag: string): void {
     this.searchService.filterImages(tag);
     this.images = this.searchService.retrieveFilteredImages();
   }

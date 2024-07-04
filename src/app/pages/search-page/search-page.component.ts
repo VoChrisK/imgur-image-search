@@ -22,7 +22,7 @@ export class SearchPageComponent {
     private router: Router
   ) {}
 
-  onReceived(value: string) {
+  onReceived(value: string): void {
     this.searchService.getImages(value)
       .then(() => this.router.navigate(['results']));
   }

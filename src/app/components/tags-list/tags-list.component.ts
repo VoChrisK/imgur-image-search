@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { TagFrequency } from '../../models/tag';
 
 @Component({
   selector: 'tags-list',
@@ -23,15 +24,15 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   imports: [CommonModule]
 })
 export class TagsListComponent { 
-  @Input() tags: any;
+  @Input() tags: Array<TagFrequency>;
 
   @Output() tagOnClick = new EventEmitter<string>();
 
-  handleTagClick(tag: string) {
+  handleTagClick(tag: string): void {
     this.tagOnClick.emit(tag);
   }
 
-    setFontSize(value: number) {
+  setFontSize(value: number): string {
     let pixels = value > 12 ? 32 : 16 + value;
 
     return `${pixels}px`;

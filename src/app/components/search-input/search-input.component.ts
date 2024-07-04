@@ -21,7 +21,7 @@ export class SearchInputComponent {
   
   @Output() searchEvent = new EventEmitter<string>();
 
-  handleOnSubmit() {
+  handleOnSubmit(): void {
     const searchValue: string = this.searchForm.get("search")?.value ?? "";
 
     this.searchEvent.emit(searchValue);

@@ -33,7 +33,7 @@ export class ImagePageComponent implements OnInit {
     this.image = this.activatedRoute.snapshot.paramMap.get('image') ?? "";
   }
 
-  redirectToPreviousPage() {
+  redirectToPreviousPage(): void {
     this.router.navigate(['results']);
   }
 }

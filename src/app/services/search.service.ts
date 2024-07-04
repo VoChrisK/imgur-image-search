@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { getImagesBaseUri, getImagesConfig } from '../models/api';
+import { Tag, TagFrequency } from '../models/tag';
+import { FilteredImages, Image } from '../models/image';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
-  private images: any;
-  private filteredImages: any;
-  private tags: any;
+  private images: Array<Image>;
+  private filteredImages: FilteredImages;
+  private tagsList: Array<Array<Tag>>;
 
   async getImages(query: string): Promise<void> {
     this.filteredImages = null;
@@ -17,7 +19,7 @@ export class SearchService {
     this.images = formattedResponse.data;
   }
 
-  filterImages(tag: string) {
+  filterImages(tag: string): void {
     this.filteredImages = this.images.filter((originalImage: any) => {
       const imageTagsNames = originalImage.tags.map(((tag: any) => tag.name));
 
@@ -25,33 +27,33 @@ export class SearchService {
     });
   }
 
-  getTags() {
-    this.tags = this.images.map((image: any) => image.tags);
+  getTagsList(): void {
+    this.tagsList = this.images.map((image: any) => image.tags);
   }
 
-  retrieveTagsFrequency() {
-    this.getTags();
-
+  retrieveTagsFrequency(): Array<TagFrequency> {
     const frequency: any = {};
 
-    this.tags.forEach((tags: any) => {
-      tags.forEach((tag: any) => {
+    this.tagsList.forEach((tags: Array<Tag>) => {
+      tags.forEach((tag: Tag) => {
         frequency[tag.name] = frequency[tag.name] ? frequency[tag.name] + 1 : 1;
       })
     })
 
-    return Object.entries(frequency).sort((el1: any, el2: any) => el2[1] - el1[1]);
+    const entries = Object.entries(frequency) as Array<TagFrequency>;
+
+    return entries.sort((el1: TagFrequency, el2: TagFrequency) => el2[1] - el1[1]);
   }
 
-  retrieveImages() {
+  retrieveImages(): Array<Image> {
     return this.images;
   }
 
-  retrieveFilteredImages() {
+  retrieveFilteredImages(): FilteredImages {
     return this.filteredImages;
   }
 
-  retrieveTags() {
-    return this.tags;
+  retrieveTagsList(): Array<Array<Tag>> {
+    return this.tagsList;
   }
 }

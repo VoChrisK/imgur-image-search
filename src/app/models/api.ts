@@ -9,3 +9,7 @@ export const getImagesConfig: RequestInit = {
   redirect: "follow",
   referrerPolicy: "no-referrer"
 }
+
+/**
+ * https://api.imgur.com/3/gallery/search/{{sort}}/{{window}}/{{page}}?q=cats
+ */
